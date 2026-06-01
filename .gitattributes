@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+*.asset binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.mp3 binary
+*.wav binary
+*.fbx binary

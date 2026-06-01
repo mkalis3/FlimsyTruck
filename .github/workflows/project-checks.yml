@@ -1,0 +1,31 @@
+name: Project checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate Unity project files
+        run: |
+          test -f README.md
+          test -f LICENSE
+          test -f docs/ARCHITECTURE.md
+          test -f docs/QA.md
+          test -f Packages/manifest.json
+          test -f ProjectSettings/ProjectVersion.txt
+          test -f Assets/Tests/EditMode/CoinWalletTests.cs
+          test -f Assets/Tests/EditMode/PurchaseCatalogTests.cs
+          python -m json.tool Packages/manifest.json > /dev/null
+          test ! -d Library
+          test ! -d Temp
+          test ! -d Obj
+
+      - name: Run repository hygiene checks
+        run: python scripts/check_project.py
